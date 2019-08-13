@@ -2,25 +2,34 @@ package com.github.rougsig.kaptsample.processor
 
 import com.github.rougsig.kaptsample.processor.base.Generator
 import com.github.rougsig.kaptsample.processor.sample.sampleGenerator
-import com.github.rougsig.kaptsample.runtime.SampleAnnotation
+import com.github.rougsig.kaptsample.runtime.ActivityParams
 import com.google.auto.service.AutoService
 import me.eugeniomarletti.kotlin.metadata.kaptGeneratedOption
-import me.eugeniomarletti.kotlin.processing.KotlinAbstractProcessor
 import java.io.File
+import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.Processor
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 
 @AutoService(Processor::class)
-class SampleProcessor : KotlinAbstractProcessor() {
-  private val sampleAnnotationClass = SampleAnnotation::class.java
+class ActivityParamsProcessor : AbstractProcessor() {
+  private val generatedDir: File
+    get() = processingEnv.options[kaptGeneratedOption].let(::File)
 
-  override fun getSupportedAnnotationTypes() = setOf(sampleAnnotationClass.canonicalName)
+  private val sampleAnnotationClass = ActivityParams::class.java
 
-  override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latest()
+  override fun getSupportedAnnotationTypes(): Set<String> {
+    return setOf(sampleAnnotationClass.canonicalName)
+  }
 
-  override fun getSupportedOptions() = setOf(kaptGeneratedOption)
+  override fun getSupportedSourceVersion(): SourceVersion {
+    return SourceVersion.latest()
+  }
+
+  override fun getSupportedOptions(): Set<String> {
+    return setOf(kaptGeneratedOption)
+  }
 
   override fun process(annotations: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
     for (type in roundEnv.getElementsAnnotatedWith(sampleAnnotationClass)) {
