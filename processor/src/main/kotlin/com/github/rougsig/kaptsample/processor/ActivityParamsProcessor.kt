@@ -4,7 +4,6 @@ import com.github.rougsig.kaptsample.processor.base.Generator
 import com.github.rougsig.kaptsample.processor.sample.sampleGenerator
 import com.github.rougsig.kaptsample.runtime.ActivityParams
 import com.google.auto.service.AutoService
-import me.eugeniomarletti.kotlin.metadata.kaptGeneratedOption
 import java.io.File
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.Processor
@@ -15,12 +14,12 @@ import javax.lang.model.element.TypeElement
 @AutoService(Processor::class)
 class ActivityParamsProcessor : AbstractProcessor() {
   private val generatedDir: File
-    get() = processingEnv.options[kaptGeneratedOption].let(::File)
+    get() = processingEnv.options[KAPT_GENERATED_OPTION].let(::File)
 
-  private val sampleAnnotationClass = ActivityParams::class.java
+  private val activityParamsAnnotationClass = ActivityParams::class.java
 
   override fun getSupportedAnnotationTypes(): Set<String> {
-    return setOf(sampleAnnotationClass.canonicalName)
+    return setOf(activityParamsAnnotationClass.canonicalName)
   }
 
   override fun getSupportedSourceVersion(): SourceVersion {
@@ -28,11 +27,11 @@ class ActivityParamsProcessor : AbstractProcessor() {
   }
 
   override fun getSupportedOptions(): Set<String> {
-    return setOf(kaptGeneratedOption)
+    return setOf(KAPT_GENERATED_OPTION)
   }
 
   override fun process(annotations: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
-    for (type in roundEnv.getElementsAnnotatedWith(sampleAnnotationClass)) {
+    for (type in roundEnv.getElementsAnnotatedWith(activityParamsAnnotationClass)) {
       sampleGenerator.generateAndWrite(Unit)
     }
     return true
@@ -48,3 +47,5 @@ class ActivityParamsProcessor : AbstractProcessor() {
     file.writeText(fileSpec.toString())
   }
 }
+
+private const val KAPT_GENERATED_OPTION = "kapt.kotlin.generated"
