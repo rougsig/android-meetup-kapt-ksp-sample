@@ -1,9 +1,8 @@
 package com.github.rougsig.kaptsample.processor
 
-import com.github.rougsig.kaptsample.processor.base.Generator
-import com.github.rougsig.kaptsample.processor.sample.sampleGenerator
 import com.github.rougsig.kaptsample.runtime.ActivityParams
 import com.google.auto.service.AutoService
+import com.squareup.kotlinpoet.FileSpec
 import java.io.File
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.Processor
@@ -11,7 +10,7 @@ import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 
-@AutoService(Processor::class)
+@AutoService(ActivityParamsProcessor::class)
 class ActivityParamsProcessor : AbstractProcessor() {
   private val generatedDir: File
     get() = processingEnv.options[KAPT_GENERATED_OPTION].let(::File)
@@ -31,20 +30,21 @@ class ActivityParamsProcessor : AbstractProcessor() {
   }
 
   override fun process(annotations: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
-    for (type in roundEnv.getElementsAnnotatedWith(activityParamsAnnotationClass)) {
-      sampleGenerator.generateAndWrite(Unit)
+    val elements = roundEnv.getElementsAnnotatedWith(activityParamsAnnotationClass)
+    for (type in elements) {
+      val targetElement = type as? TypeElement ?: continue
+      val generatorParams = ActivityIntentFactoryGeneratorParams.create(targetElement)
+      val fileSpec = generateActivityIntentFactory(generatorParams)
     }
     return true
   }
 
-  private fun <T> Generator<T>.generateAndWrite(type: T) {
-    val fileSpec = generateFile(type)
-
-    val outputDirPath = "$generatedDir/${fileSpec.packageName.replace(".", "/")}"
+  private fun <T> FileSpec.generateAndWrite() {
+    val outputDirPath = "$generatedDir/${packageName.replace(".", "/")}"
     val outputDir = File(outputDirPath).also { it.mkdirs() }
 
-    val file = File(outputDir, "${fileSpec.name}.kt")
-    file.writeText(fileSpec.toString())
+    val file = File(outputDir, "$name.kt")
+    file.writeText(toString())
   }
 }
 

@@ -3,7 +3,7 @@ package com.github.rougsig.kaptsample.testmodels
 import android.app.Activity
 import com.github.rougsig.kaptsample.runtime.ActivityParams
 
-@ActivityParams(activityClass = Activity::class)
-data class CatDetails(
-  val catId: String
-)
+class CatDetailsActivity : Activity()
+
+@ActivityParams(activityClass = CatDetailsActivity::class)
+data class CatDetails(val catId: String? )
