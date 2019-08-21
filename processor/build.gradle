@@ -4,6 +4,8 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
+  compileOnly deps.android.runtime
+
   implementation project(':runtime')
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"

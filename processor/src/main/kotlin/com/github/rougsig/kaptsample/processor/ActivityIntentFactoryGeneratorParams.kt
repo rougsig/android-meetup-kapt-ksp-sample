@@ -12,6 +12,7 @@ import javax.lang.model.type.DeclaredType
 import javax.lang.model.type.MirroredTypeException
 
 data class ActivityIntentFactoryGeneratorParams(
+  val targetActivity: ClassName,
   val factoryName: String,
   val packageName: String,
   val methodName: String,
@@ -29,13 +30,14 @@ data class ActivityIntentFactoryGeneratorParams(
       val methodName = "createIntent"
 
       val annotation = targetElement.getAnnotation(ActivityParams::class.java)
-      val targetActivitySimpleName = try {
-        annotation.activityClass.simpleName!!
+      val targetActivity = try {
+        annotation.activityClass.asClassName()
       } catch (mte: MirroredTypeException) {
         val classTypeMirror = mte.typeMirror as DeclaredType
         val classTypeElement = classTypeMirror.asElement() as TypeElement
-        classTypeElement.simpleName.toString()
-      }.beginWithUpperCase()
+        classTypeElement.asClassName()
+      }
+      val targetActivitySimpleName = targetActivity.simpleName
       val factoryName = "${targetActivitySimpleName}IntentFactory"
 
       val metadata = targetElement.kotlinMetadata as KotlinClassMetadata
@@ -52,6 +54,7 @@ data class ActivityIntentFactoryGeneratorParams(
         }
 
       return ActivityIntentFactoryGeneratorParams(
+        targetActivity = targetActivity,
         factoryName = factoryName,
         packageName = packageName,
         methodName = methodName,

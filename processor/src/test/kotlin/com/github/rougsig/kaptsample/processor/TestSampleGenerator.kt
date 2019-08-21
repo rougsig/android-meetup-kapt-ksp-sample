@@ -4,7 +4,7 @@ class TestSampleGenerator : APTest("com.github.rougsig.kaptsample.testmodels") {
   fun testSample() {
     testProcessor(AnnotationProcessor(
       sourceFiles = listOf("CatDetails.java"),
-      destinationFile = "SampleGenerated.kt.txt",
+      destinationFile = "CatDetailsActivityIntentFactory.kt.txt",
       processor = ActivityParamsProcessor()
     ))
   }

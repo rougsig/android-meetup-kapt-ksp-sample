@@ -1,0 +1,24 @@
+package com.github.rougsig.kaptsample.testmodels
+
+import android.content.Context
+import android.content.Intent
+import kotlin.String
+
+object CatDetailsActivityIntentFactory {
+  const val catId: String = "EXTRA_CAT_ID"
+  const val catName: String = "EXTRA_CAT_NAME"
+  const val favoriteFish: String = "EXTRA_FAVORITE_FISH"
+
+  fun createIntent(
+    context: Context,
+    catId: String,
+    catName: String,
+    favoriteFish: String?
+  ): Intent {
+    val intent = Intent(context, CatDetailsActivity::class.java)
+    intent.putExtra(CAT_ID, catId)
+    intent.putExtra(CAT_NAME, catName)
+    intent.putExtra(FAVORITE_FISH, favoriteFish)
+    return intent
+  }
+}

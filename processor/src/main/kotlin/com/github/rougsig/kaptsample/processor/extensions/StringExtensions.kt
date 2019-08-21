@@ -7,3 +7,18 @@ internal fun String.beginWithUpperCase(): String {
     else -> first().toUpperCase() + substring(1)
   }
 }
+
+internal fun String.toSnakeCase(): String {
+  val builder = StringBuilder()
+  var isFirst = true
+  forEach {
+    if (it.isUpperCase()) {
+      if (isFirst) isFirst = false
+      else builder.append("_")
+      builder.append(it)
+    } else {
+      builder.append(it)
+    }
+  }
+  return builder.toString().toUpperCase()
+}

@@ -1,3 +1,0 @@
-package com.github.rougsig.kaptsample.testmodels
-
-class SampleGenerated
