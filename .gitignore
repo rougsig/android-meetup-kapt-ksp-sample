@@ -4,8 +4,4 @@ build/
 .idea/*
 .idea/workspace.xml
 *.iml
-!.idea/misc.xml
-!.idea/vsc.xml
-!.idea/gradle.xml
-!.idea/codeStyles/*
 local.properties
