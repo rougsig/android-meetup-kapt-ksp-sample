@@ -1,9 +1,12 @@
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-kapt'
+plugins {
+  id 'kotlin'
+}
+
+repositories {
+  mavenCentral()
+}
 
 dependencies {
-  implementation project(':runtime')
   implementation deps.android.runtime
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
-  kapt "com.google.auto.service:auto-service:1.0-rc4"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
 }

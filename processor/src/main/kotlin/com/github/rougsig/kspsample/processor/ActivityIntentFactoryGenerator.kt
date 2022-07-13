@@ -1,9 +1,9 @@
-package com.github.rougsig.kaptsample.processor
+package com.github.rougsig.kspsample.processor
 
 import android.content.Context
 import android.content.Intent
-import com.github.rougsig.kaptsample.processor.extensions.beginWithUpperCase
-import com.github.rougsig.kaptsample.processor.extensions.toSnakeCase
+import com.github.rougsig.kspsample.processor.extensions.beginWithUpperCase
+import com.github.rougsig.kspsample.processor.extensions.toSnakeCase
 import com.squareup.kotlinpoet.*
 
 internal fun generateActivityIntentFactory(params: ActivityIntentFactoryGeneratorParams): FileSpec {

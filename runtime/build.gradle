@@ -1,6 +1,12 @@
-apply plugin: 'kotlin'
+plugins {
+  id 'kotlin'
+}
+
+repositories {
+  mavenCentral()
+}
 
 dependencies {
   compileOnly deps.android.runtime
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
 }

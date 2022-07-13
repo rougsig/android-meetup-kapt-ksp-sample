@@ -1,4 +1,4 @@
-package com.github.rougsig.kaptsample.runtime
+package com.github.rougsig.kspsample.runtime
 
 import android.app.Activity
 import kotlin.reflect.KClass

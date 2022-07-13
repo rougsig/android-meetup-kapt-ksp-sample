@@ -1,10 +1,10 @@
-package com.github.rougsig.kaptsample.processor.extensions
+package com.github.rougsig.kspsample.processor.extensions
 
 internal fun String.beginWithUpperCase(): String {
   return when (length) {
     0 -> ""
-    1 -> toUpperCase()
-    else -> first().toUpperCase() + substring(1)
+    1 -> uppercase()
+    else -> first().uppercase() + substring(1)
   }
 }
 
@@ -20,5 +20,5 @@ internal fun String.toSnakeCase(): String {
       builder.append(it)
     }
   }
-  return builder.toString().toUpperCase()
+  return builder.toString().uppercase()
 }
